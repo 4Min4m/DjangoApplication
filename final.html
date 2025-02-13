@@ -1,0 +1,44 @@
+<h2>Exam Result for {{ submission.user.username }} - {{ submission.course.name }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Your Answer</th>
+            <th>Correct Answer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question, answers in results.items %}
+        <tr>
+            <td>{{ question.question_text }}</td>
+            <td>{{ answers.submitted_choice }}</td>
+            <td>{{ answers.correct_choice }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Total Score: {{ score }}</p>  ```
+
+**7. Processing Answers and Calculating Results:**
+
+This is the most complex part.  You'll need to implement the logic within the `submit_exam` view and the `calculate_results` function to:
+
+*   Retrieve the submitted answers from the `request.POST` data.
+*   Compare the submitted answers to the correct answers stored in the `Choice` model.
+*   Calculate the score.
+*   Pass the results to the `exam_result.html` template.
+
+This will involve iterating through the questions, retrieving the selected choices (if any), and comparing them to the `is_correct` field of the `Choice` model.
+
+**Key Improvements and Considerations:**
+
+*   **`related_name`:** Using `related_name` in your models (e.g., `questions` and `choices`) makes it much easier to access related objects in your templates and views.
+*   **Form Handling:**  The template now includes a form for submitting the exam.
+*   **`login_required`:** The `@login_required` decorator ensures that only logged-in users can submit exams and view results.
+*   **Error Handling:** Add error handling (e.g., `try...except` blocks) to your views to handle potential issues.
+*   **Security:** Be mindful of security best practices (e.g., preventing SQL injection).
+*   **Template Logic:** Use Django template tags and filters effectively to display the data in a user-friendly way.
+
+This detailed breakdown should give you a solid roadmap to complete your Django project.  Remember to test your code thoroughly at each step.  If you have specific questions about a particular part of the code, feel free to ask, and I'll do my best to help!
